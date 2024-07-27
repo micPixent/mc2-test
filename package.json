@@ -24,6 +24,7 @@
     "prettier": "3.3.3",
     "typescript": "^5.5.4",
     "typescript-eslint": "^7.17.0",
-    "vite-plugin-eslint2": "^4.4.0"
+    "vite-plugin-eslint2": "^4.4.0",
+    "vue-tsc": "^1"
   }
 }
