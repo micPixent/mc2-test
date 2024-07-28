@@ -29,7 +29,7 @@ const chartConfig = {
   watchlist: props.watchlist,
 };
 
-const renderTradingChart = () => {
+const renderTradingChart = async () => {
   const script = document.createElement("script");
   script.type = "text/javascript";
   script.async = true;

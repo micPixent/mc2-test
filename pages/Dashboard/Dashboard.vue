@@ -11,9 +11,9 @@
             <Dropdown :options="AppConfig.cryptoCurrencyOption" />
           </Containers>
           <IntervalOption />
-          <div class="flex">
-            <ClockIcon class="text-primary-500 h-5 lg:h-10 hover:cursor-pointer" />
-            <BellAlertIcon class="text-primary-500 h-5 lg:h-10 hover:cursor-pointer" />
+          <div class="flex space-x-3 items-center">
+            <ClockIcon class="text-primary-500 h-5 lg:h-7 hover:cursor-pointer" />
+            <BellAlertIcon class="text-primary-500 h-5 lg:h-7 hover:cursor-pointer" />
           </div>
         </Block>
 
