@@ -1,5 +1,7 @@
 <template>
-  <div :disbabled="disabled" :class="classNames('p-10 ', variantClassName, classname)"><slot></slot></div>
+  <div :disbabled="disabled" :class="classNames('p-4 cursor-pointer rounded-md', variantClassName, classname)">
+    <slot></slot>
+  </div>
 </template>
 
 <script setup lang="ts">

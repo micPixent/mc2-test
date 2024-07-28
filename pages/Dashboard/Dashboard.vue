@@ -5,8 +5,11 @@
         <TransakBuy />
       </Containers>
 
-      <Containers>
-        <Dropdown :options="AppConfig.cryptoCurrencyOption" />
+      <Containers classname="w-full">
+        <div class="flex space-x-4">
+          <Dropdown :options="AppConfig.cryptoCurrencyOption" />
+          <IntervalOption />
+        </div>
         <TradingChart />
       </Containers>
     </div>
@@ -20,4 +23,5 @@ import StandardLayout from "~/layouts/StandardLayout/StandardLayout.vue";
 import AppConfig from "~/config/AppConfig";
 import Containers from "~/components/Containers/Containers.vue";
 import TransakBuy from "./components/TransakBuy.vue";
+import IntervalOption from "./components/IntervalOption.vue";
 </script>

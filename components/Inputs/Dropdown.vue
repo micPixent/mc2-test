@@ -1,10 +1,13 @@
 <template>
   <Listbox v-model="selectedOption">
-    <ListboxButton
-      class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg border border-gray-300 focus:outline-none focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
-    >
-      {{ selectedOption.label }}
-    </ListboxButton>
+    <div class="relative">
+      <ListboxButton
+        class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg border border-gray-300 focus:outline-none focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+      >
+        {{ selectedOption.label }}
+      </ListboxButton>
+    </div>
+
     <ListboxOptions class="relative cursor-default select-none py-2 mx-auto bg-primary-50 rounded-md">
       <ListboxOption
         v-for="(option, index) in options"
