@@ -6,19 +6,21 @@
       >
         {{ selectedOption.label }}
       </ListboxButton>
-    </div>
 
-    <ListboxOptions class="relative cursor-default select-none py-2 mx-auto bg-primary-50 rounded-md">
-      <ListboxOption
-        v-for="(option, index) in options"
-        :key="index"
-        :value="option"
-        class="hover:bg-primary-300 text-center"
-        :class="`${selectedOption.value === option.value && 'bg-primary-600 text-white rounded-sm'}`"
+      <ListboxOptions
+        class="absolute z-50 w-full cursor-default overflow-auto text-base py-2 mx-auto bg-primary-50 rounded-md max-h-60"
       >
-        {{ option.label }}
-      </ListboxOption>
-    </ListboxOptions>
+        <ListboxOption
+          v-for="(option, index) in options"
+          :key="index"
+          :value="option"
+          class="hover:bg-primary-300 text-center"
+          :class="`${selectedOption.value === option.value && 'bg-primary-600 text-white rounded-sm'}`"
+        >
+          {{ option.label }}
+        </ListboxOption>
+      </ListboxOptions>
+    </div>
   </Listbox>
 </template>
 

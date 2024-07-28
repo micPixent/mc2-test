@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import Containers from "~/components/Containers/Containers.vue";
-import AppConfig from "~/config/AppConfig";
+import DashboardConfig from "../config";
 
 type Props = {
   selectedSymbol?: string;
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const chartConfig = {
-  ...AppConfig.tradingChartStaticConfig,
+  ...DashboardConfig.tradingChartStaticConfig,
   symbol: props.selectedSymbol,
   interval: props.interval,
   watchlist: props.watchlist,
