@@ -1,6 +1,6 @@
 export const classNameByVariant = (variant: string) => {
   if (variant === "text") {
-    return "border border-transparent text-black bg-transparent";
+    return "border border-transparent text-black bg-transparent hover:underline";
   }
 
   if (variant === "outlined") {
