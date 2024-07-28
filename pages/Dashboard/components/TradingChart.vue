@@ -1,5 +1,5 @@
 <template>
-  <Containers :classname="`bg-primary-500 h-screen`">
+  <Containers classname="bg-primary-500 h-full ">
     <div class="tradingview-widget-container h-full w-full">
       <div class="tradingview-widget-container__widget w-full" style="height: calc(100% - 32px)"></div>
     </div>

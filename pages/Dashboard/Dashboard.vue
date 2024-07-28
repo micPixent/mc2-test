@@ -1,18 +1,20 @@
 <template>
   <StandardLayout>
-    <div class="flex justify-between">
-      <Containers classname="basis-1/2 ">
+    <div class="flex flex-col-reverse justify-around space-y-10 lg:flex-row lg:justify-between space-x-3 h-dvh">
+      <Containers classname="lg:basis-1/2">
         <TransakBuy />
       </Containers>
 
-      <Containers classname=" w-full space-x-10">
-        <Block classname="flex w-full justify-start space-x-5">
-          <Containers classname="items-center">
+      <Containers classname="w-full bg-white h-auto">
+        <Block classname="block lg:flex w-full justify-start space-y-1 lg:space-x-5 px-10">
+          <Containers classname="my-auto">
             <Dropdown :options="AppConfig.cryptoCurrencyOption" />
           </Containers>
           <IntervalOption />
-          <ClockIcon class="text-white h-10 hover:cursor-pointer" />
-          <BellAlertIcon class="text-white h-10 hover:cursor-pointer" />
+          <div class="flex">
+            <ClockIcon class="text-primary-500 h-5 lg:h-10 hover:cursor-pointer" />
+            <BellAlertIcon class="text-primary-500 h-5 lg:h-10 hover:cursor-pointer" />
+          </div>
         </Block>
 
         <TradingChart />

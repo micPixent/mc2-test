@@ -1,5 +1,5 @@
 <template>
-  <Containers class="h-full">
+  <Containers class="h-96 lg:h-full">
     <iframe
       id="transakIframe"
       :src="iframeSrc"
