@@ -8,4 +8,9 @@ export default defineNuxtConfig({
   },
   ssr: false,
   pages: true,
+  runtimeConfig: {
+    public: {
+      transakApiKey: process.env.NUXT_TRANSAK_API_KEY,
+    },
+  },
 });
