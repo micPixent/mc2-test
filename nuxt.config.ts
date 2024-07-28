@@ -13,4 +13,5 @@ export default defineNuxtConfig({
       transakApiKey: process.env.NUXT_TRANSAK_API_KEY,
     },
   },
+  css: ["@/assets/css/global.css"],
 });
