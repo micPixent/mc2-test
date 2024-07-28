@@ -1,11 +1,11 @@
 <template>
   <StandardLayout>
     <div class="flex justify-between">
-      <Containers>
+      <Containers classname="basis-1/2 ">
         <TransakBuy />
       </Containers>
 
-      <Containers classname="w-full space-x-10">
+      <Containers classname=" w-full space-x-10">
         <Block classname="flex w-full justify-start space-x-5">
           <Containers classname="items-center">
             <Dropdown :options="AppConfig.cryptoCurrencyOption" />

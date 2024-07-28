@@ -1,18 +1,19 @@
 <template>
-  <div class="container">
-    <div class="h-full">
-      <iframe
-        id="transakIframe"
-        :src="iframeSrc"
-        allow="camera;microphone;payment"
-        class="w-full h-5/6 rounded-lg"
-      ></iframe>
-    </div>
-  </div>
+  <Containers class="h-full">
+    <iframe
+      id="transakIframe"
+      :src="iframeSrc"
+      allow="camera;microphone;payment"
+      class="w-full h-5/6 pt-10 pb-2 px-2"
+    ></iframe>
+    <Text class="text-black text-xs mx-2">* Staging Environment for testing purposes only!</Text>
+  </Containers>
 </template>
 
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
+import Containers from "~/components/Containers/Containers.vue";
+import Text from "~/components/Typography/Text.vue";
 
 const config = useRuntimeConfig();
 const queryParams = "";
@@ -32,21 +33,3 @@ const iframeSrc = `https://global-stg.transak.com/?apiKey=${config.public.transa
 //   }
 // });
 </script>
-
-<style scoped>
-.container {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: grid;
-}
-.iframe-wrapper {
-  position: relative;
-  width: 500px;
-  height: 80vh;
-  margin: auto;
-  box-shadow: 0 0 15px #1461db;
-  border-radius: 15px;
-  overflow: hidden;
-}
-</style>
