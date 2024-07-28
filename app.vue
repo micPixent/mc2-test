@@ -9,6 +9,7 @@
     </Containers>
   </header>
 
+  <Modal :close="signUpModal.close" :is-open="signUpModal.isOpen.value" :open="signUpModal.open">Test</Modal>
   <NuxtPage />
 </template>
 
@@ -16,6 +17,7 @@
 import Button from "~/components/Buttons/Button.vue";
 import { useOpenClose } from "./composables/useOpen/useOpenClose";
 import Containers from "./components/Containers/Containers.vue";
+import Modal from "~/components/Modal/Modal.vue";
 
 const signUpModal = useOpenClose();
 const loginModal = useOpenClose();
