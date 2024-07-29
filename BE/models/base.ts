@@ -37,8 +37,7 @@ export function BaseFunction() {
 				query.populate(options.populate);
 			}
 
-			const result = await query.exec();
-			return result;
+			return query;
 		}
 
 		static async updateOne(

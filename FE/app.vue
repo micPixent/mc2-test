@@ -1,7 +1,7 @@
 <template>
   <header class="bg-primary-200 py-2 flex justify-between items-center px-5 w-full overflow-hidden">
     <Containers classname=" space-x-5 lg:flex ">
-      <Text class="text-xs lg:text-base" @click="registerUser">MICHAEL MC2</Text>
+      <Text class="text-xs lg:text-base" @click="loginUser">MICHAEL MC2</Text>
     </Containers>
     <Containers classname="flex space-x-5">
       <Button variant="text" classname="p-2" @click="loginModal.toggle">
@@ -41,6 +41,18 @@ const registerUser = async () => {
       password: "test2",
     });
     console.log(response, "response");
+  } catch (error) {
+    console.error("Error registering user:", error);
+  }
+};
+
+const loginUser = async () => {
+  try {
+    const response = await $axios.post("/mc2-test/login", {
+      email: "test2",
+      password: "test2",
+    });
+    console.log(response.data, "response");
   } catch (error) {
     console.error("Error registering user:", error);
   }

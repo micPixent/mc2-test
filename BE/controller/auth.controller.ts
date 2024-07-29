@@ -1,7 +1,10 @@
 import type { Request, Response } from "express";
 import { ILoginPayload, IRegisterPayload } from "../interface/auth";
 import { AuthService } from "../services/auth.service";
-import { SendSuccessResponse } from "../helpers/returnHelper";
+import {
+	SendSuccessResponse,
+	SendUnknownErrorResponse,
+} from "../helpers/returnHelper";
 
 export async function register(req: Request, res: Response) {
 	try {
@@ -15,7 +18,7 @@ export async function register(req: Request, res: Response) {
 		SendSuccessResponse(res, register);
 	} catch (error: any) {
 		console.error("Error registering new user account.", error);
-		throw new Error("Error register account");
+		SendUnknownErrorResponse(res, error);
 	}
 }
 
@@ -26,10 +29,14 @@ export async function login(req: Request, res: Response) {
 			password: req?.body?.password,
 		};
 
+		if (!payload.email && !payload.password) {
+			return;
+		}
+
 		let login = await AuthService.login(payload);
 		SendSuccessResponse(res, login);
 	} catch (error: any) {
 		console.error("Login Failed", error);
-		throw new Error("Login Failed");
+		SendUnknownErrorResponse(res, error);
 	}
 }
