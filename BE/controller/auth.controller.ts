@@ -9,6 +9,8 @@ export async function register(req: Request, res: Response) {
 			email: req?.body?.email,
 			fullname: req?.body?.fullname,
 		};
+
+		console.log(payload, "payload");
 		let register = await AuthService.register(payload);
 		SendSuccessResponse(res, register);
 	} catch (error: any) {

@@ -14,4 +14,5 @@ export default defineNuxtConfig({
     },
   },
   css: ["@/assets/css/global.css"],
+  plugins: ["~/plugins/axios.ts"],
 });
