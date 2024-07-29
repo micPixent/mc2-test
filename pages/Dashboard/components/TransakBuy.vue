@@ -1,6 +1,11 @@
 <template>
   <Containers class="h-96 lg:h-full">
-    <iframe id="transakIframe" :src="iframeSrc" class="w-full h-5/6 pt-10 pb-2 px-2"></iframe>
+    <iframe
+      id="transakIframe"
+      :src="iframeSrc"
+      allow="camera;microphone;payment"
+      class="w-full h-5/6 pt-10 pb-2 px-2"
+    ></iframe>
     <Text class="text-black text-xs mx-2">* Staging Environment for testing purposes only!</Text>
   </Containers>
 </template>
