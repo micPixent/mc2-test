@@ -46,6 +46,7 @@ const renderTradingChart = async () => {
 watch(
   () => props,
   () => {
+    console.log("renders");
     renderTradingChart();
   },
 );

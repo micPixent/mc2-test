@@ -1,4 +1,4 @@
-import { IRegisterPayload } from "../interface/auth";
+import { ILoginPayload, IRegisterPayload } from "../interface/auth";
 import { Users } from "../models/collections";
 
 export class AuthService {
@@ -6,9 +6,19 @@ export class AuthService {
 		let user = {
 			email: payload.email,
 			fullname: payload.fullname,
+			password: payload.password,
 		};
 
 		await Users.save(user);
 		return payload;
+	}
+
+	static async login(payload: ILoginPayload) {
+		let user = {
+			email: payload.email,
+			password: payload.password,
+		};
+
+		return {};
 	}
 }

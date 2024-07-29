@@ -36,8 +36,9 @@ const loginModal = useOpenClose();
 const registerUser = async () => {
   try {
     const response = await $axios.post("/mc2-test/register", {
-      email: "test",
-      fullname: "test",
+      email: "test2",
+      fullname: "test2",
+      password: "test2",
     });
     console.log(response, "response");
   } catch (error) {
