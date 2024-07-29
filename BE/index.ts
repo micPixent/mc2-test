@@ -19,23 +19,6 @@ server.on("close", () => {
 	console.log(`Server closed on port: ${port}`);
 });
 
-process.on("SIGINT", () => {
-	console.info("prepare to close connection.");
-	server.close(async (err: any) => {
-		if (err) {
-			console.error(err);
-		}
-
-		await dbConnections.closeConnection().catch((error) => {
-			console.error("Database stop connection failed", error);
-		});
-		console.info("closing connection in 10 secs.");
-		setTimeout(() => {
-			process.exit(0);
-		}, 10000);
-	});
-});
-
 // mongoose
 // 	.connect(url)
 // 	.then(() => {
