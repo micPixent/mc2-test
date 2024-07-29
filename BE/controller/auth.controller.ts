@@ -7,7 +7,7 @@ export async function register(req: Request, res: Response) {
 	try {
 		let payload: IRegisterPayload = {
 			email: req?.body?.email,
-			password: req?.body?.password,
+			fullname: req?.body?.fullname,
 		};
 		let register = await AuthService.register(payload);
 		SendSuccessResponse(res, register);
