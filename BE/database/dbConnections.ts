@@ -2,7 +2,7 @@ import "dotenv/config";
 import mongoose, { type Connection } from "mongoose";
 import { ConnectOptions } from "../interface/connection";
 
-let defaultDbUrl = process.env.DEFAULT_DB_URL ?? "";
+let defaultDbUrl = process.env.MONGO_URI ?? "";
 
 interface DbConnections {
 	defaultDb: Connection;
