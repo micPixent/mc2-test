@@ -1,8 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongodb";
 import { Send400ErrorResponse } from "../helpers/returnHelper";
-import { Users } from "../models/collections";
 import config from "../config/config";
 
 export const extractJWT = (req: Request, res: Response, next: NextFunction) => {
@@ -27,8 +25,6 @@ export const extractJWT = (req: Request, res: Response, next: NextFunction) => {
 			}
 		);
 	} else {
-		// Send400ErrorResponse(res, '100', 'Invalid Token');
-		// return;
 		next();
 	}
 };

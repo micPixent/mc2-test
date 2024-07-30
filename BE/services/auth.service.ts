@@ -2,7 +2,6 @@ import { ILoginPayload, IRegisterPayload } from "../interface/auth";
 import { ErrorCode, ErrorCodes } from "../interface/errorCodes";
 import signJWT from "../middleware/signJwt";
 import { Users } from "../models/collections";
-import { compare } from "bcrypt";
 
 export class AuthService {
 	static async register(payload: IRegisterPayload) {

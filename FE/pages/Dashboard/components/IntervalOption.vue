@@ -5,6 +5,8 @@
       :key="index"
       class="lg:w-full hover:bg-primary-100 !py-2"
       variant="outlined"
+      :class="{ '!bg-primary-500': currentInterval === index }"
+      @click="handleOnClick(index)"
     >
       <Text class="text-center text-black text-xs lg:text-base">{{ interval.label }}</Text>
     </Button>
@@ -16,4 +18,11 @@ import Containers from "~/components/Containers/Containers.vue";
 import Button from "~/components/Buttons/Button.vue";
 import DashboardConfig from "../config";
 import Text from "~/components/Typography/Text.vue";
+import { useState } from "~/composables/useState";
+
+const [currentInterval, setCurrentInterval] = useState(0);
+
+const handleOnClick = (index: number) => {
+  setCurrentInterval(index);
+};
 </script>

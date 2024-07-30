@@ -8,7 +8,7 @@
         <Text class="text-xs lg:text-base">My Transaction</Text>
       </Button>
     </Containers>
-    <Containers classname="flex space-x-3">
+    <Containers v-if="!authStore.isAuthenticated" classname="flex space-x-3">
       <Button classname="px-3 py-1" @click="loginModal.toggle"><Text class="text-xs lg:text-base">Login</Text></Button>
       <Button classname="px-3 py-1" @click="signUpModal.toggle">
         <Text class="text-xs lg:text-base">Sign Up</Text>
@@ -51,12 +51,6 @@
     </Containers>
   </Modal>
 
-  <Modal :close="errorModal.close" :is-open="errorModal.isOpen.value" :open="errorModal.open">
-    <Containers class="px-2 py-2 mx-2">
-      <ExclamationCircleIcon />
-      <Text class="text-center">Error</Text>
-    </Containers>
-  </Modal>
   <NuxtPage />
 </template>
 
@@ -69,14 +63,9 @@ import Text from "./components/Typography/Text.vue";
 import { useNuxtApp } from "#app"; //
 import Form from "~/components/Form/Form.vue";
 import { loginFields, registerFields } from "~/data/auth.config";
-import { CheckIcon, ExclamationCircleIcon } from "@heroicons/vue/24/solid";
-
-const { $axios } = useNuxtApp();
-
-const signUpModal = useOpenClose();
-const loginModal = useOpenClose();
-const successModal = useOpenClose();
-const errorModal = useOpenClose();
+import { CheckIcon } from "@heroicons/vue/24/solid";
+import { setItem } from "~/utils/storage";
+import { useAuthStore } from "~/store/auth";
 
 type RegisterForm = {
   fullname: "";
@@ -88,6 +77,13 @@ type LoginForm = {
   email: "";
   password: "";
 };
+
+const { $axios } = useNuxtApp();
+const authStore = useAuthStore();
+
+const signUpModal = useOpenClose();
+const loginModal = useOpenClose();
+const successModal = useOpenClose();
 
 const registereInitialValues = {
   fullname: "",
@@ -110,24 +106,13 @@ const handleLogin = async (formData: LoginForm) => {
 
 const registerUser = async (payload: RegisterForm) => {
   try {
-    const response = await $axios.post("/register", {
+    await $axios.post("/register", {
       fullname: payload.fullname,
       email: payload.email,
       password: payload.password,
     });
 
-    if (!response.data.error) {
-      signUpModal.close();
-      successModal.open();
-    }
-
-    if (response.data.error) {
-      console.log(response.data.error, "error");
-      signUpModal.close();
-      errorModal.open();
-    }
-
-    console.log(response, "response");
+    successModal.open();
   } catch (error) {
     console.error("Error registering user:", error);
   }
@@ -139,7 +124,11 @@ const loginUser = async (payload: LoginForm) => {
       email: payload.email,
       password: payload.password,
     });
-    console.log("response");
+
+    if (!response.data.error) {
+      setItem("token", response.data.data.token);
+      authStore.login(response.data.data.token);
+    }
   } catch (error) {
     console.error("Error registering user:", error);
   }
