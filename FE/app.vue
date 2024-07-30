@@ -16,26 +16,37 @@
     </Containers>
   </header>
 
-  <Modal :close="signUpModal.close" :is-open="signUpModal.isOpen.value" :open="signUpModal.open">Test</Modal>
+  <Modal :close="signUpModal.close" :is-open="signUpModal.isOpen.value" :open="signUpModal.open">
+    <Containers class="px-2 py-2 mx-2">
+      <Text class="text-center">IT'S FREE! Track your favorite coin easily!</Text>
+      <Text class="text-center">Sign Up Now!</Text>
+    </Containers>
+  </Modal>
   <NuxtPage />
 </template>
 
 <script lang="ts" setup>
 import Button from "~/components/Buttons/Button.vue";
-import { useOpenClose } from "./composables/useOpen/useOpenClose";
+import { useOpenClose } from "./composables/useOpenClose";
 import Containers from "./components/Containers/Containers.vue";
 import Modal from "~/components/Modal/Modal.vue";
 import Text from "./components/Typography/Text.vue";
 import { useNuxtApp } from "#app"; // Import useNuxtApp to access Nuxt app context
+import { useState } from "~/composables/useState";
 
 const { $axios } = useNuxtApp();
 
 const signUpModal = useOpenClose();
 const loginModal = useOpenClose();
+const registerState = useState({ email: "", fullname: "", password: "" });
+
+const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" });
+
+console.log(loginCredentials.value, "loginCredentials");
 
 const registerUser = async () => {
   try {
-    const response = await $axios.post("/mc2-test/register", {
+    const response = await $axios.post("/register", {
       email: "test2",
       fullname: "test2",
       password: "test2",
@@ -48,7 +59,7 @@ const registerUser = async () => {
 
 const loginUser = async () => {
   try {
-    const response = await $axios.post("/mc2-test/login", {
+    const response = await $axios.post("/login", {
       email: "test2",
       password: "test2",
     });

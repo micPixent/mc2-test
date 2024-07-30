@@ -4,6 +4,7 @@ import dbConnections from "./database/dbConnections";
 import bodyParser from "body-parser";
 import { authRoutes } from "./routes/auth.routes";
 import cors from "cors";
+import { extractJWT } from "./middleware/extractJwt";
 
 const mongoose = require("mongoose");
 
@@ -18,6 +19,8 @@ let server: any;
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
+app.use(extractJWT);
 
 app.use(
 	cors({

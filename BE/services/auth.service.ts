@@ -1,5 +1,5 @@
 import { ILoginPayload, IRegisterPayload } from "../interface/auth";
-import { ErrorCodes } from "../interface/errorCodes";
+import { ErrorCode, ErrorCodes } from "../interface/errorCodes";
 import signJWT from "../middleware/signJwt";
 import { Users } from "../models/collections";
 import { compare } from "bcrypt";
@@ -15,7 +15,7 @@ export class AuthService {
 		let findUserExist = await Users.findOne({ email: user.email });
 
 		if (findUserExist.email) {
-			return Promise.reject(ErrorCodes.InvalidUser);
+			throw new ErrorCode(ErrorCodes.EmailExist);
 		}
 		await Users.save(user);
 		return payload;
@@ -42,7 +42,8 @@ export class AuthService {
 		return { fullname: user.fullname, email: user.email, token: token };
 	}
 
-	static async isValidPassword(password: string, hashPassword: string) {
-		return await compare(password, hashPassword);
+	static async isValidPassword(password: string, dbPassword: string) {
+		// return await compare(password, dbPassword);
+		return password === dbPassword;
 	}
 }

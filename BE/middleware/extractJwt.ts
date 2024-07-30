@@ -22,15 +22,6 @@ export const extractJWT = (req: Request, res: Response, next: NextFunction) => {
 					return;
 				}
 
-				let player = await Users.findOne(
-					{ _id: new ObjectId(decoded?.id) },
-					{
-						isSecondary: false,
-						isCursor: false,
-						project: { status: 1, fullname: 1 },
-					}
-				);
-
 				res.locals.JWTToken = decoded;
 				next();
 			}

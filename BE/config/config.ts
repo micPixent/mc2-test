@@ -21,12 +21,8 @@ const SERVER = {
 const config = {
 	server: SERVER,
 	auth: {
-		SALT_LENGTH: process.env.SALT_LENGTH ? Number(process.env.SALT_LENGTH) : 10,
-		MAX_REGISTER_FULLNAME: Number.isNaN(
-			Number(process.env.MAX_REGISTER_FULLNAME)
-		)
-			? 10
-			: Number(process.env.MAX_REGISTER_FULLNAME),
+		SALT_LENGTH: 10,
+		MAX_REGISTER_FULLNAME: 10,
 	},
 };
 
