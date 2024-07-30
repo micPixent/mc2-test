@@ -12,9 +12,9 @@ export class AuthService {
 			password: payload.password,
 		};
 
-		let findUserExist = await Users.findOne({ email: user.email });
+		let findUserExist = await Users.findOne({ email: user?.email });
 
-		if (findUserExist.email) {
+		if (findUserExist) {
 			throw new ErrorCode(ErrorCodes.EmailExist);
 		}
 		await Users.save(user);

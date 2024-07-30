@@ -1,12 +1,12 @@
 <template>
   <StandardLayout>
-    <div class="flex flex-col-reverse justify-around space-y-10 lg:flex-row lg:justify-between space-x-3 h-dvh">
+    <div class="flex space-x-3 h-dvh">
       <!-- <Containers classname="lg:basis-1/2"> -->
       <!-- <TransakBuy /> -->
       <!-- </Containers> -->
 
       <Containers classname="w-full bg-white h-auto">
-        <Block classname="block lg:flex w-full justify-start space-y-1 lg:space-x-5 px-10">
+        <Block classname="block lg:flex w-full justify-start space-y-3 lg:space-x-5 px-10">
           <Containers classname="my-auto">
             <Dropdown :options="AppConfig.cryptoCurrencyOption" />
           </Containers>

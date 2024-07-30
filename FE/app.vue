@@ -4,7 +4,7 @@
       <Text class="text-xs lg:text-base" @click="loginUser">MICHAEL MC2</Text>
     </Containers>
     <Containers classname="flex space-x-5">
-      <Button variant="text" classname="p-2" @click="loginModal.toggle">
+      <Button variant="text" classname="p-2">
         <Text class="text-xs lg:text-base">My Transaction</Text>
       </Button>
     </Containers>
@@ -20,6 +20,41 @@
     <Containers class="px-2 py-2 mx-2">
       <Text class="text-center">IT'S FREE! Track your favorite coin easily!</Text>
       <Text class="text-center">Sign Up Now!</Text>
+
+      <Form
+        :fields="registerFields"
+        :on-submit="handleRegister"
+        submit-button-text="Register"
+        :initial-values="registereInitialValues"
+      />
+    </Containers>
+  </Modal>
+
+  <Modal :close="loginModal.close" :is-open="loginModal.isOpen.value" :open="loginModal.open">
+    <Containers class="px-2 py-2 mx-2">
+      <Text class="text-center">Have an account?</Text>
+      <Text class="text-center">Login Now!</Text>
+
+      <Form
+        :fields="loginFields"
+        :on-submit="handleLogin"
+        submit-button-text="Login"
+        :initial-values="loginInitialValues"
+      />
+    </Containers>
+  </Modal>
+
+  <Modal :close="successModal.close" :is-open="successModal.isOpen.value" :open="successModal.open">
+    <Containers class="px-2 py-2 mx-2">
+      <CheckIcon />
+      <Text class="text-center">Success</Text>
+    </Containers>
+  </Modal>
+
+  <Modal :close="errorModal.close" :is-open="errorModal.isOpen.value" :open="errorModal.open">
+    <Containers class="px-2 py-2 mx-2">
+      <ExclamationCircleIcon />
+      <Text class="text-center">Error</Text>
     </Containers>
   </Modal>
   <NuxtPage />
@@ -31,39 +66,80 @@ import { useOpenClose } from "./composables/useOpenClose";
 import Containers from "./components/Containers/Containers.vue";
 import Modal from "~/components/Modal/Modal.vue";
 import Text from "./components/Typography/Text.vue";
-import { useNuxtApp } from "#app"; // Import useNuxtApp to access Nuxt app context
-import { useState } from "~/composables/useState";
+import { useNuxtApp } from "#app"; //
+import Form from "~/components/Form/Form.vue";
+import { loginFields, registerFields } from "~/data/auth.config";
+import { CheckIcon, ExclamationCircleIcon } from "@heroicons/vue/24/solid";
 
 const { $axios } = useNuxtApp();
 
 const signUpModal = useOpenClose();
 const loginModal = useOpenClose();
-const registerState = useState({ email: "", fullname: "", password: "" });
+const successModal = useOpenClose();
+const errorModal = useOpenClose();
 
-const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" });
+type RegisterForm = {
+  fullname: "";
+  email: "";
+  password: "";
+};
 
-console.log(loginCredentials.value, "loginCredentials");
+type LoginForm = {
+  email: "";
+  password: "";
+};
 
-const registerUser = async () => {
+const registereInitialValues = {
+  fullname: "",
+  email: "",
+  password: "",
+};
+
+const loginInitialValues = {
+  email: "",
+  password: "",
+};
+
+const handleRegister = async (formData: RegisterForm) => {
+  registerUser(formData);
+};
+
+const handleLogin = async (formData: LoginForm) => {
+  loginUser(formData);
+};
+
+const registerUser = async (payload: RegisterForm) => {
   try {
     const response = await $axios.post("/register", {
-      email: "test2",
-      fullname: "test2",
-      password: "test2",
+      fullname: payload.fullname,
+      email: payload.email,
+      password: payload.password,
     });
+
+    if (!response.data.error) {
+      signUpModal.close();
+      successModal.open();
+    }
+
+    if (response.data.error) {
+      console.log(response.data.error, "error");
+      signUpModal.close();
+      errorModal.open();
+    }
+
     console.log(response, "response");
   } catch (error) {
     console.error("Error registering user:", error);
   }
 };
 
-const loginUser = async () => {
+const loginUser = async (payload: LoginForm) => {
   try {
     const response = await $axios.post("/login", {
-      email: "test2",
-      password: "test2",
+      email: payload.email,
+      password: payload.password,
     });
-    console.log(response.data, "response");
+    console.log("response");
   } catch (error) {
     console.error("Error registering user:", error);
   }
