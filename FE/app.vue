@@ -14,6 +14,10 @@
         <Text class="text-xs lg:text-base">Sign Up</Text>
       </Button>
     </Containers>
+
+    <Containers v-if="authStore.isAuthenticated" classname="flex space-x-3">
+      <Button classname="px-3 py-1" @click="handleLogout"><Text class="text-xs lg:text-base">Logout</Text></Button>
+    </Containers>
   </header>
 
   <Modal :close="signUpModal.close" :is-open="signUpModal.isOpen.value" :open="signUpModal.open">
@@ -104,6 +108,10 @@ const handleLogin = async (formData: LoginForm) => {
   loginUser(formData);
 };
 
+const handleLogout = () => {
+  authStore.logout();
+};
+
 const registerUser = async (payload: RegisterForm) => {
   try {
     await $axios.post("/register", {
@@ -112,7 +120,7 @@ const registerUser = async (payload: RegisterForm) => {
       password: payload.password,
     });
 
-    successModal.open();
+    signUpModal.close();
   } catch (error) {
     console.error("Error registering user:", error);
   }
@@ -128,6 +136,7 @@ const loginUser = async (payload: LoginForm) => {
     if (!response.data.error) {
       setItem("token", response.data.data.token);
       authStore.login(response.data.data.token);
+      loginModal.close();
     }
   } catch (error) {
     console.error("Error registering user:", error);
@@ -143,4 +152,12 @@ watch(
   () => loginModal.isOpen.value,
   () => {},
 );
+
+onMounted(() => {
+  authStore.init();
+});
+
+definePageMeta({
+  middleware: "auth",
+});
 </script>
