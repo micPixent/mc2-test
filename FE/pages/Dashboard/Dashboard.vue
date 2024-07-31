@@ -33,4 +33,10 @@ import Containers from "~/components/Containers/Containers.vue";
 import IntervalOption from "./components/IntervalOption.vue";
 import Block from "~/components/Containers/Block.vue";
 import { ClockIcon, BellAlertIcon } from "@heroicons/vue/24/solid";
+import { useSharedState } from "~/composables/useSharedState";
+const { sharedValue } = useSharedState();
+
+watch(sharedValue, (newValue) => {
+  console.log("Parent component sharedValue updated:", newValue);
+});
 </script>

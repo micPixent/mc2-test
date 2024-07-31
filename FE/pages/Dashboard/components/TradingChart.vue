@@ -9,32 +9,47 @@
 <script setup lang="ts">
 import Containers from "~/components/Containers/Containers.vue";
 import DashboardConfig from "../config";
+import { useStore } from "~/composables/useStore";
 
 type Props = {
   selectedSymbol?: string;
-  interval?: string;
   watchList?: Array<string>;
 };
 
+const store = useStore();
+
+const intervalValue = computed(() => store.getValue());
+
+const widgetContainerRef = ref<HTMLDivElement | null>(null);
+
 const props = withDefaults(defineProps<Props>(), {
   selectedSymbol: "BINANCE:BTCUSD",
-  interval: "D",
   watchlist: ["BINANCE:BNBUSD", "BINANCE:BTCUSD", "BINANCE:ETHUSD"],
 });
 
-const chartConfig = {
+const chartConfig = computed(() => ({
   ...DashboardConfig.tradingChartStaticConfig,
   symbol: props.selectedSymbol,
-  interval: props.interval,
+  interval: intervalValue.value,
   watchlist: props.watchlist,
-};
+}));
 
 const renderTradingChart = async () => {
+  if (!widgetContainerRef.value) {
+    return;
+  }
+
+  widgetContainerRef.value.innerHTML = "";
+
   const script = document.createElement("script");
   script.type = "text/javascript";
   script.async = true;
   script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-  script.innerHTML = JSON.stringify(chartConfig);
+
+  const plainChartConfig = { ...chartConfig.value };
+  script.innerHTML = JSON.stringify(plainChartConfig);
+
+  widgetContainerRef.value.appendChild(script);
 
   const widget = document?.querySelector(".tradingview-widget-container__widget");
   if (widget) {
@@ -44,14 +59,16 @@ const renderTradingChart = async () => {
 };
 
 watch(
-  () => props,
+  chartConfig,
   () => {
-    console.log("renders");
     renderTradingChart();
   },
+  { deep: true },
 );
 
 onMounted(() => {
+  widgetContainerRef.value = document.querySelector(".tradingview-widget-container__widget");
+
   renderTradingChart();
 });
 </script>

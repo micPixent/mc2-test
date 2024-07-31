@@ -8,23 +8,23 @@ const DashboardConfig = {
   chartIntervals: [
     {
       label: "1D",
-      valuel: "D",
+      value: "D",
     },
     {
       label: "1W",
-      valuel: "W",
+      value: "W",
     },
     {
       label: "4H",
-      valuel: "240",
+      value: "240",
     },
     {
       label: "1H",
-      valuel: "60",
+      value: "60",
     },
     {
       label: "30M",
-      valuel: "30",
+      value: "30",
     },
   ],
 };
