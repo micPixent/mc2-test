@@ -101,10 +101,16 @@ const loginInitialValues = {
 };
 
 const handleRegister = async (formData: RegisterForm) => {
+  if (!formData.email) {
+    return;
+  }
   registerUser(formData);
 };
 
 const handleLogin = async (formData: LoginForm) => {
+  if (!formData.email) {
+    return;
+  }
   loginUser(formData);
 };
 
