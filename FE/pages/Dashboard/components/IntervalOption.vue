@@ -18,7 +18,7 @@ import Containers from "~/components/Containers/Containers.vue";
 import Button from "~/components/Buttons/Button.vue";
 import DashboardConfig from "../config";
 import Text from "~/components/Typography/Text.vue";
-import { useState } from "~/composables/useState";
+import { useState } from "~/composables/useGeneralState";
 
 const [currentInterval, setCurrentInterval] = useState(0);
 
