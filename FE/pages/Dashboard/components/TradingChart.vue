@@ -18,21 +18,12 @@ type Props = {
 
 const store = useStore();
 
-const intervalValue = computed(() => store.getValue());
-
 const widgetContainerRef = ref<HTMLDivElement | null>(null);
 
 const props = withDefaults(defineProps<Props>(), {
   selectedSymbol: "BINANCE:BTCUSD",
   watchlist: ["BINANCE:BNBUSD", "BINANCE:BTCUSD", "BINANCE:ETHUSD"],
 });
-
-const chartConfig = computed(() => ({
-  ...DashboardConfig.tradingChartStaticConfig,
-  symbol: props.selectedSymbol,
-  interval: intervalValue.value,
-  watchlist: props.watchlist,
-}));
 
 const renderTradingChart = async () => {
   if (!widgetContainerRef.value) {
@@ -57,6 +48,15 @@ const renderTradingChart = async () => {
   }
   return;
 };
+
+const intervalValue = computed(() => store.getValue());
+
+const chartConfig = computed(() => ({
+  ...DashboardConfig.tradingChartStaticConfig,
+  symbol: props.selectedSymbol,
+  interval: intervalValue.value,
+  watchlist: props.watchlist,
+}));
 
 watch(
   chartConfig,
