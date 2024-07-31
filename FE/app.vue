@@ -50,8 +50,10 @@
 
   <Modal :close="successModal.close" :is-open="successModal.isOpen.value" :open="successModal.open">
     <Containers class="px-2 py-2 mx-2">
-      <CheckIcon />
-      <Text class="text-center">Success</Text>
+      <CheckIcon class="h-20 w-20 my-5 mx-auto text-green-500" />
+      <Text class="text-center font-bold">Register Success</Text>
+      <Text class="text-center font-bold">Login to your account now!</Text>
+      <Button class="text-center py-2 my-5" @click="handleOpenModal">Login Now</Button>
     </Containers>
   </Modal>
 
@@ -114,6 +116,14 @@ const handleLogin = async (formData: LoginForm) => {
   loginUser(formData);
 };
 
+const handleOpenModal = () => {
+  if (successModal.isOpen) {
+    successModal.close();
+  }
+
+  loginModal.open();
+};
+
 const handleLogout = () => {
   authStore.logout();
 };
@@ -127,6 +137,7 @@ const registerUser = async (payload: RegisterForm) => {
     });
 
     signUpModal.close();
+    successModal.open();
   } catch (error) {
     console.error("Error registering user:", error);
   }
