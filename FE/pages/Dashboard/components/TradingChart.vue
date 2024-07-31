@@ -12,8 +12,9 @@ import DashboardConfig from "../config";
 import { useStore } from "~/composables/useStore";
 
 type Props = {
-  selectedSymbol?: string;
-  watchList?: Array<string>;
+  selectedSymbol: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  watchlist: any;
 };
 
 const store = useStore();
@@ -21,7 +22,6 @@ const store = useStore();
 const widgetContainerRef = ref<HTMLDivElement | null>(null);
 
 const props = withDefaults(defineProps<Props>(), {
-  selectedSymbol: "BINANCE:BTCUSD",
   watchlist: ["BINANCE:BNBUSD", "BINANCE:BTCUSD", "BINANCE:ETHUSD"],
 });
 
@@ -55,7 +55,6 @@ const chartConfig = computed(() => ({
   ...DashboardConfig.tradingChartStaticConfig,
   symbol: props.selectedSymbol,
   interval: intervalValue.value,
-  watchlist: props.watchlist,
 }));
 
 watch(

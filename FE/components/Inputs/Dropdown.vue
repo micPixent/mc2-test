@@ -1,5 +1,5 @@
 <template>
-  <Listbox v-model="selectedOption">
+  <Listbox v-model="selectedOption" @update:modelValue="handleSelectionChange">
     <div class="relative">
       <ListboxButton
         class="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg border border-gray-300 focus:outline-none focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
@@ -39,5 +39,14 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: "Select",
 });
 
+const emit = defineEmits<{
+  (e: "update:selectedOption", selectedOption: IOptions): void;
+}>();
+
 const selectedOption = ref(props.options[0]);
+
+const handleSelectionChange = (value: IOptions) => {
+  selectedOption.value = value;
+  emit("update:selectedOption", value);
+};
 </script>

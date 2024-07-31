@@ -8,7 +8,7 @@
       <Containers classname="w-full bg-white h-auto">
         <Block classname="block lg:flex w-full justify-start space-y-3 lg:space-x-5 px-10">
           <Containers classname="my-auto">
-            <Dropdown :options="AppConfig.cryptoCurrencyOption" />
+            <Dropdown :options="AppConfig.cryptoCurrencyOption" @update:selectedOption="handleSelectedOption" />
           </Containers>
           <IntervalOption />
           <div class="flex space-x-3 items-center">
@@ -17,7 +17,7 @@
           </div>
         </Block>
 
-        <TradingChart />
+        <TradingChart :selectedSymbol="selectedOption" />
       </Containers>
     </div>
   </StandardLayout>
@@ -33,10 +33,11 @@ import Containers from "~/components/Containers/Containers.vue";
 import IntervalOption from "./components/IntervalOption.vue";
 import Block from "~/components/Containers/Block.vue";
 import { ClockIcon, BellAlertIcon } from "@heroicons/vue/24/solid";
-import { useSharedState } from "~/composables/useSharedState";
-const { sharedValue } = useSharedState();
+import type { IOptions } from "~/components/Inputs/type";
 
-watch(sharedValue, (newValue) => {
-  console.log("Parent component sharedValue updated:", newValue);
-});
+const selectedOption = ref(AppConfig.cryptoCurrencyOption[0].value);
+
+const handleSelectedOption = (option: IOptions) => {
+  selectedOption.value = option.value;
+};
 </script>
