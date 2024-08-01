@@ -17,7 +17,7 @@
           </div>
         </Block>
 
-        <TradingChart :selectedSymbol="selectedOption" />
+        <TradingChart :selectedSymbol="selectedOption" :watchlist="userWatchlists" />
       </Containers>
     </div>
 
