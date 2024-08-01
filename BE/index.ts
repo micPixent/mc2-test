@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import { authRoutes } from "./routes/auth.routes";
 import cors from "cors";
 import { extractJWT } from "./middleware/extractJwt";
+import { watchlistRoutes } from "./routes/watchList.routes";
 
 const mongoose = require("mongoose");
 
@@ -17,14 +18,14 @@ const port = 8080;
 const urlPath = "/mc2-test/";
 let server: any;
 
-app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(extractJWT);
 
 app.use(
 	cors({
-		origin: "http://localhost:3000", // Allow requests from your frontend's origin
+		origin: "http://localhost:3000",
 		methods: "GET,POST,PUT,DELETE,OPTIONS",
 		allowedHeaders: "Content-Type, Authorization",
 	})
@@ -43,6 +44,7 @@ app.use((_req, res, next) => {
 });
 
 app.use(urlPath, authRoutes);
+app.use(urlPath, watchlistRoutes);
 
 server = app.listen(port, () => {
 	console.log(`Server started at http://localhost:${port}`);

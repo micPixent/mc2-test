@@ -66,7 +66,7 @@ import { useOpenClose } from "./composables/useOpenClose";
 import Containers from "./components/Containers/Containers.vue";
 import Modal from "~/components/Modal/Modal.vue";
 import Text from "./components/Typography/Text.vue";
-import { useNuxtApp } from "#app"; //
+import { useNuxtApp } from "#app";
 import Form from "~/components/Form/Form.vue";
 import { loginFields, registerFields } from "~/data/auth.config";
 import { CheckIcon } from "@heroicons/vue/24/solid";
@@ -152,6 +152,7 @@ const loginUser = async (payload: LoginForm) => {
 
     if (!response.data.error) {
       setItem("token", response.data.data.token);
+      setItem("user_id", response.data.data.id);
       authStore.login(response.data.data.token);
       loginModal.close();
     }

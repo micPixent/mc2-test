@@ -1,51 +1,45 @@
 import type { Request, Response } from "express";
-import { ILoginPayload, IRegisterPayload } from "../interface/auth";
-import { AuthService } from "../services/auth.service";
-import { SendSuccessResponse } from "../helpers/returnHelper";
+import { ILoginPayload } from "../interface/auth";
+import {
+	Send400ErrorResponse,
+	SendSuccessResponse,
+} from "../helpers/returnHelper";
 import { WatchlistService } from "../services/watchlist.service";
 
 export async function getAllWatchlist(req: Request, res: Response) {
 	try {
-		let payload: IRegisterPayload = {
-			email: req?.body?.email,
-			fullname: req?.body?.fullname,
-			password: req?.body?.password,
-		};
+		const { id } = req.query;
 
-		let register = await WatchlistService.getWatchlist(payload);
-		SendSuccessResponse(res, register);
+		if (!id) {
+			return Send400ErrorResponse;
+		}
+
+		let fetchWatchlist = await WatchlistService.getWatchlist(id as string);
+		SendSuccessResponse(res, fetchWatchlist);
 	} catch (error: any) {
-		console.error("Error registering new user account.", error);
-		throw new Error("Error register account");
-	}
-}
-
-export async function addWatchlist(req: Request, res: Response) {
-	try {
-		let payload: ILoginPayload = {
-			email: req?.body?.email,
-			password: req?.body?.password,
-		};
-
-		let login = await WatchlistService.createWatchlist(payload);
-		SendSuccessResponse(res, login);
-	} catch (error: any) {
-		console.error("Login Failed", error);
-		throw new Error("Login Failed");
+		console.error("Error fetch watchlist.", error);
+		throw new Error("Error fetch watchlis");
 	}
 }
 
 export async function updateWatchlist(req: Request, res: Response) {
 	try {
-		let payload: ILoginPayload = {
-			email: req?.body?.email,
-			password: req?.body?.password,
-		};
+		const { id } = req.query;
 
-		let login = await WatchlistService.updateWatchlist(payload);
-		SendSuccessResponse(res, login);
+		if (!id) {
+			return Send400ErrorResponse;
+		}
+
+		const watchlist: Array<string> = req.body.watchlist;
+
+		let mutateWatchlist = await WatchlistService.updateWatchlist(
+			id as string,
+			watchlist
+		);
+
+		SendSuccessResponse(res, mutateWatchlist);
 	} catch (error: any) {
-		console.error("Login Failed", error);
-		throw new Error("Login Failed");
+		console.error("Update watchlist failed", error);
+		throw new Error("Update watchlist failed");
 	}
 }

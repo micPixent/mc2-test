@@ -22,7 +22,7 @@ const store = useStore();
 const widgetContainerRef = ref<HTMLDivElement | null>(null);
 
 const props = withDefaults(defineProps<Props>(), {
-  watchlist: ["BINANCE:BNBUSD", "BINANCE:BTCUSD", "BINANCE:ETHUSD"],
+  watchlist: [],
 });
 
 const renderTradingChart = async () => {
@@ -55,6 +55,7 @@ const chartConfig = computed(() => ({
   ...DashboardConfig.tradingChartStaticConfig,
   symbol: props.selectedSymbol,
   interval: intervalValue.value,
+  watchlist: props.watchlist,
 }));
 
 watch(

@@ -1,14 +1,25 @@
 import { ILoginPayload, IRegisterPayload } from "../interface/auth";
 import { ErrorCode, ErrorCodes } from "../interface/errorCodes";
 import signJWT from "../middleware/signJwt";
-import { Users } from "../models/collections";
+import { Users, UsersWatchlist } from "../models/collections";
 
+const { v4: uuidv4 } = require("uuid");
 export class AuthService {
 	static async register(payload: IRegisterPayload) {
+		const random = uuidv4();
+		console.log(random, "randpm userid");
 		let user = {
+			id: random,
 			email: payload.email,
 			fullname: payload.fullname,
 			password: payload.password,
+		};
+
+		let userWatchlist = {
+			id: random,
+			email: payload.email,
+			fullname: payload.fullname,
+			watchlislt: [],
 		};
 
 		let findUserExist = await Users.findOne({ email: user?.email });
@@ -17,7 +28,8 @@ export class AuthService {
 			throw new ErrorCode(ErrorCodes.EmailExist);
 		}
 		await Users.save(user);
-		return payload;
+		await UsersWatchlist.save(userWatchlist);
+		return { message: "Account created successfully" };
 	}
 
 	static async login(payload: ILoginPayload) {
@@ -38,11 +50,15 @@ export class AuthService {
 
 		let token = await signJWT(user);
 
-		return { fullname: user.fullname, email: user.email, token: token };
+		return {
+			id: user.id,
+			fullname: user.fullname,
+			email: user.email,
+			token: token,
+		};
 	}
 
 	static async isValidPassword(password: string, dbPassword: string) {
-		// return await compare(password, dbPassword);
 		return password === dbPassword;
 	}
 }

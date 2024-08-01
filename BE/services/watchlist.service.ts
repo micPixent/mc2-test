@@ -1,33 +1,39 @@
-import { ILoginPayload, IRegisterPayload } from "../interface/auth";
-import { Users } from "../models/collections";
+import { ErrorCode, ErrorCodes } from "../interface/errorCodes";
+import { Users, UsersWatchlist } from "../models/collections";
 
 export class WatchlistService {
-	static async createWatchlist(payload: any) {
-		let user = {
-			email: payload.email,
-			fullname: payload.fullname,
-			password: payload.password,
-		};
+	static async getWatchlist(id: string) {
+		let user = await UsersWatchlist.findOne({ id: id });
 
-		await Users.save(user);
-		return payload;
+		if (!user) {
+			throw new ErrorCode(ErrorCodes.InvalidUser);
+		}
+
+		if (!user.watchList) {
+			return { watchlist: [] };
+		}
+
+		return { watchlist: user.watchlist };
 	}
 
-	static async getWatchlist(payload: any) {
-		let user = {
-			email: payload.email,
-			password: payload.password,
-		};
+	static async updateWatchlist(id: string, watchlist: Array<string>) {
+		let user = await UsersWatchlist.findOne({ id: id });
 
-		return {};
-	}
+		if (!user) {
+			throw new ErrorCode(ErrorCodes.InvalidUser);
+		}
 
-	static async updateWatchlist(payload: any) {
-		let user = {
-			email: payload.email,
-			password: payload.password,
-		};
+		const result = await UsersWatchlist.updateOne(
+			{ id: user.id },
+			{ $set: { watchlist: watchlist } }
+		);
 
-		return {};
+		if (!result) {
+			throw new Error("Failed to update watchlist.");
+		}
+
+		user = await UsersWatchlist.findOne({ id: id });
+
+		return { watchlist: user.watchlist };
 	}
 }

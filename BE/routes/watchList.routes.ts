@@ -1,9 +1,11 @@
 import express from "express";
-import { register } from "../controller/auth.controller";
+import {
+	getAllWatchlist,
+	updateWatchlist,
+} from "../controller/watchlist.controller";
 
-export const authRoutes = express.Router();
-authRoutes.use(express.json());
+export const watchlistRoutes = express.Router();
+watchlistRoutes.use(express.json());
 
-authRoutes.get("/getWatchlist/:email", register);
-authRoutes.post("/createWatchlist/:email", register);
-authRoutes.put("/createWatchlist/:email", register);
+watchlistRoutes.get("/getWatchlist", getAllWatchlist);
+watchlistRoutes.put("/updateWatchlist", updateWatchlist);
